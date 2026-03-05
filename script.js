@@ -36,7 +36,9 @@ const questions = [
   { question: "Qual combinação resume elementos climáticos centrais para a produção agrícola?", options: ["Temperatura, radiação, umidade, precipitação e vento", "Preço, crédito, estoque e frete", "Solo, trator, combustível e mão de obra", "Semente, embalagem, logística e imposto"], correct: 0, explanation: "Essas variáveis atmosféricas são base para manejo agronômico." },
 ];
 
-const state = { mode: "study", index: 0, score: 0, streak: 0, hits: 0, misses: 0, answered: false, autoRead: true };
+const ttsRates = [1, 1.25, 1.5, 1.75, 2];
+
+const state = { mode: "study", index: 0, score: 0, streak: 0, hits: 0, misses: 0, answered: false, autoRead: true, ttsRate: ttsRates[0] };
 
 const startScreen = document.getElementById("start-screen");
 const quizScreen = document.getElementById("quiz-screen");
@@ -58,6 +60,7 @@ const missesEl = document.getElementById("misses");
 const accuracyEl = document.getElementById("accuracy");
 const finalScoreEl = document.getElementById("final-score");
 const ttsBtn = document.getElementById("tts-btn");
+const ttsSpeedBtn = document.getElementById("tts-speed-btn");
 const autoReadBtn = document.getElementById("auto-read-btn");
 
 const modeButtons = Array.from(document.querySelectorAll(".mode-btn[data-mode]"));
@@ -96,9 +99,13 @@ function speakText(text) {
   speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = "pt-BR";
-  utterance.rate = 1.28;
+  utterance.rate = state.ttsRate;
   utterance.pitch = 1;
   speechSynthesis.speak(utterance);
+}
+
+function updateTtsSpeedLabel() {
+  ttsSpeedBtn.textContent = `⏱️ Velocidade TTS: ${state.ttsRate.toFixed(2).replace(/\.00$/, "")}x`;
 }
 
 function speakCurrentQuestion(auto = false) {
@@ -127,6 +134,16 @@ autoReadBtn.addEventListener("click", () => {
   autoReadBtn.textContent = `🗣️ Leitura automática: ${state.autoRead ? "ON" : "OFF"}`;
   playTone("click");
 });
+
+ttsSpeedBtn.addEventListener("click", () => {
+  const currentIndex = ttsRates.indexOf(state.ttsRate);
+  const nextIndex = (currentIndex + 1) % ttsRates.length;
+  state.ttsRate = ttsRates[nextIndex];
+  updateTtsSpeedLabel();
+  playTone("click");
+});
+
+updateTtsSpeedLabel();
 
 startBtn.addEventListener("click", () => {
   ensureAudioContext();
