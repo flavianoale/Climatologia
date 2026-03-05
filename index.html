@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ClimaQuiz Agro</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section id="start-screen" class="card start-screen">
+        <h1>🌿 ClimaQuiz Agro</h1>
+        <p>
+          Estude climatologia agrícola com perguntas rápidas, pontuação e feedback imediato.
+        </p>
+        <div class="mode-select">
+          <h2>Escolha o modo</h2>
+          <button class="mode-btn active" data-mode="study">🎮 Modo Estudo</button>
+          <button class="mode-btn" data-mode="challenge">⚡ Modo Desafio</button>
+        </div>
+        <button id="start-btn" class="primary">Começar jogo</button>
+      </section>
+
+      <section id="quiz-screen" class="card hidden">
+        <header class="hud">
+          <div class="progress-wrap">
+            <span id="progress-label">Pergunta 1/25</span>
+            <div class="progress-bar">
+              <div id="progress-fill"></div>
+            </div>
+          </div>
+          <div class="stats">
+            <span>⭐ Pontos: <strong id="score">0</strong></span>
+            <span>🔥 Streak: <strong id="streak">0</strong></span>
+            <span>🏅 Medalha: <strong id="medal">Nenhuma</strong></span>
+          </div>
+        </header>
+
+        <article class="question-card">
+          <h2 id="question-text"></h2>
+          <button id="tts-btn" class="secondary">🔊 Ouvir pergunta</button>
+        </article>
+
+        <div id="answers" class="answers"></div>
+
+        <div id="feedback" class="feedback hidden">
+          <p id="feedback-text"></p>
+          <button id="next-btn" class="primary">➡ Próxima pergunta</button>
+        </div>
+      </section>
+
+      <section id="end-screen" class="card hidden">
+        <h2>📊 Resultado final</h2>
+        <p>✅ Acertos: <strong id="hits"></strong></p>
+        <p>❌ Erros: <strong id="misses"></strong></p>
+        <p>📈 Aproveitamento: <strong id="accuracy"></strong></p>
+        <p>⭐ Pontuação final: <strong id="final-score"></strong></p>
+        <button id="restart-btn" class="primary">Jogar novamente</button>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
